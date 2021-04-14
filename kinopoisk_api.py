@@ -87,7 +87,7 @@ class KP:
             data['imdb_rate'] = imdb_rate
             return FILM(data)
 
-        for _ in range(10):
+        for _ in range(100):
             try:
                 request = requests.get(self.API + 'films/' + str(film_id), headers=self.headers)
                 request_json = json.loads(request.text)
@@ -114,7 +114,7 @@ class KP:
                 continue
 
     def search(self, query):
-        for _ in range(10):
+        for _ in range(100):
             try:
                 request = requests.get(self.API + 'films/search-by-keyword', headers=self.headers,
                                        params={"keyword": query, "page": 1})
@@ -131,7 +131,7 @@ class KP:
                 continue
 
     def top500(self):
-        for _ in range(10):
+        for _ in range(100):
             try:
                 request = requests.get(self.API + 'films/top?type=BEST_FILMS_LIST&page=1&listId=1',
                                        headers=self.headers
