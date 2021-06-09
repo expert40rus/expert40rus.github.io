@@ -12,13 +12,11 @@ keyboard1 = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
 keyboard1.row('Привет')
 keyboard2 = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
 keyboard2.row('Фильм')
-keyboard3 = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
-keyboard3.row('Пока')
 
 
 @bot.message_handler(commands=['help'])
 def send_help(message):
-    bot.send_message(message.chat.id, f'Напиши команду /start и мы начнем')
+    bot.send_message(message.chat.id, f'Напиши команду /start и мы начнем также можешь прописать Топ 500')
 
 
 @bot.message_handler(commands=['start'])
@@ -51,9 +49,6 @@ def get_text_messages(message):
         markup.add(telebot.types.InlineKeyboardButton(text='Документальный', callback_data='Документальный'))
         markup.add(telebot.types.InlineKeyboardButton(text='Ничего не подходит', callback_data='Ничего не подходит'))
         bot.send_message(message.chat.id, text="Какой жанр предпочитаете?", reply_markup=markup)
-    elif user_text() == 'пока':
-        bot.send_message(chat_id, f'Пока, {username}')
-        bot.send_sticker(chat_id, sticker.bye_sticker)
     else:
         bot.send_sticker(chat_id, sticker.wtf_sticker)
 
@@ -77,14 +72,14 @@ cinema = {
 
 @bot.callback_query_handler(func=lambda call: True)
 def query_handler(call):
-    bot.answer_callback_query(callback_query_id=call.id, text='Хороший выбор!')
-    sad = 'Очень жаль'
+    bot.answer_callback_query(callback_query_id=call.id)
+    sad = 'Возвращайтесь, мы исправимся'
     if call.data in cinema:
         answer = get_cinema(call.data)
         bot.send_message(call.message.chat.id, answer)
-
     else:
-        bot.send_message(call.message.chat.id, sad, reply_markup=keyboard3)
+        bot.send_message(call.message.chat.id, sad, reply_markup=keyboard2)
+        bot.send_sticker(call.message.chat.id, sticker.mask_sticker)
 
 
 if __name__ == '__main__':
