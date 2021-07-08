@@ -1,7 +1,8 @@
 from kinopoisk_api import KP
 import random
+import config
 
-kinopoisk = KP(token='9736285b-b7d0-4a40-9f9e-7cfb09354984')
+kinopoisk = KP(token=config.kpoisk)
 
 
 def get_cinema(genre):
